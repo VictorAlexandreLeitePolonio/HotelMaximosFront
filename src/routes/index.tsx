@@ -1,26 +1,34 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { motion } from 'motion/react'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { useAuthStore } from '@/stores/auth-store'
 
 export const Route = createFileRoute('/')({
-  component: HomePage,
+  component: IndexPage,
 })
 
-function HomePage() {
+function IndexPage() {
+  const navigate = useNavigate()
+  const status = useAuthStore((state) => state.status)
+  const user = useAuthStore((state) => state.user)
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      void navigate({ to: user?.deveAlterarSenha ? '/perfil' : '/dashboard' })
+      return
+    }
+
+    if (status === 'anonymous') {
+      void navigate({ to: '/login' })
+    }
+  }, [navigate, status, user?.deveAlterarSenha])
+
   return (
-    <main className="page-shell">
-      <motion.section
-        className="hero-card"
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: 'easeOut' }}
-      >
-        <span className="eyebrow">Sprint 0</span>
-        <h1>Hotel Maximos</h1>
-        <p>
-          Base frontend em React 19.2.1 com TanStack Start, SSR, TanStack Router,
-          Query/Table, Zustand, Zod, shadcn/ui e Motion.
-        </p>
-      </motion.section>
+    <main className="auth-loading-shell">
+      <section className="auth-loading-card">
+        <span className="eyebrow">Hotel Maximos</span>
+        <h1>Preparando a Sprint 1</h1>
+        <p>Redirecionando voce para a rota correta de autenticacao ou dashboard.</p>
+      </section>
     </main>
   )
 }
