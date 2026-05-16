@@ -15,6 +15,7 @@ import { Route as authenticatedAuthenticatedRouteImport } from './routes/(authen
 import { Route as authenticatedAuthenticatedPerfilRouteImport } from './routes/(authenticated)/_authenticated/perfil'
 import { Route as authenticatedAuthenticatedDashboardRouteImport } from './routes/(authenticated)/_authenticated/dashboard'
 import { Route as authenticatedAuthenticatedUsuariosIndexRouteImport } from './routes/(authenticated)/_authenticated/usuarios/index'
+import { Route as authenticatedAuthenticatedHospedesIndexRouteImport } from './routes/(authenticated)/_authenticated/hospedes/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -49,12 +50,19 @@ const authenticatedAuthenticatedUsuariosIndexRoute =
     path: '/usuarios/',
     getParentRoute: () => authenticatedAuthenticatedRoute,
   } as any)
+const authenticatedAuthenticatedHospedesIndexRoute =
+  authenticatedAuthenticatedHospedesIndexRouteImport.update({
+    id: '/hospedes/',
+    path: '/hospedes/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof publicLoginRoute
   '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -62,6 +70,7 @@ export interface FileRoutesByTo {
   '/login': typeof publicLoginRoute
   '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/hospedes': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/usuarios': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRoutesById {
@@ -71,13 +80,20 @@ export interface FileRoutesById {
   '/(public)/login': typeof publicLoginRoute
   '/(authenticated)/_authenticated/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/(authenticated)/_authenticated/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/(authenticated)/_authenticated/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/(authenticated)/_authenticated/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/dashboard' | '/perfil' | '/usuarios/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/perfil'
+    | '/hospedes/'
+    | '/usuarios/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/dashboard' | '/perfil' | '/usuarios'
+  to: '/' | '/login' | '/dashboard' | '/perfil' | '/hospedes' | '/usuarios'
   id:
     | '__root__'
     | '/'
@@ -85,6 +101,7 @@ export interface FileRouteTypes {
     | '/(public)/login'
     | '/(authenticated)/_authenticated/dashboard'
     | '/(authenticated)/_authenticated/perfil'
+    | '/(authenticated)/_authenticated/hospedes/'
     | '/(authenticated)/_authenticated/usuarios/'
   fileRoutesById: FileRoutesById
 }
@@ -138,12 +155,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAuthenticatedUsuariosIndexRouteImport
       parentRoute: typeof authenticatedAuthenticatedRoute
     }
+    '/(authenticated)/_authenticated/hospedes/': {
+      id: '/(authenticated)/_authenticated/hospedes/'
+      path: '/hospedes'
+      fullPath: '/hospedes/'
+      preLoaderRoute: typeof authenticatedAuthenticatedHospedesIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
   }
 }
 
 interface authenticatedAuthenticatedRouteChildren {
   authenticatedAuthenticatedDashboardRoute: typeof authenticatedAuthenticatedDashboardRoute
   authenticatedAuthenticatedPerfilRoute: typeof authenticatedAuthenticatedPerfilRoute
+  authenticatedAuthenticatedHospedesIndexRoute: typeof authenticatedAuthenticatedHospedesIndexRoute
   authenticatedAuthenticatedUsuariosIndexRoute: typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 
@@ -153,6 +178,8 @@ const authenticatedAuthenticatedRouteChildren: authenticatedAuthenticatedRouteCh
       authenticatedAuthenticatedDashboardRoute,
     authenticatedAuthenticatedPerfilRoute:
       authenticatedAuthenticatedPerfilRoute,
+    authenticatedAuthenticatedHospedesIndexRoute:
+      authenticatedAuthenticatedHospedesIndexRoute,
     authenticatedAuthenticatedUsuariosIndexRoute:
       authenticatedAuthenticatedUsuariosIndexRoute,
   }

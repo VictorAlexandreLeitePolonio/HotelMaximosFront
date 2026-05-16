@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
-import { LogOut, Shield, UserCog, UserRound } from 'lucide-react'
+import { BedDouble, LogOut, Shield, UserCog, UserRound } from 'lucide-react'
 import { logoutSession } from '@/lib/auth-session'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -24,9 +24,9 @@ export function AppShell({ title, description, children }: AppShellProps) {
     <main className="app-shell">
       <aside className="app-sidebar">
         <div className="brand-block">
-          <span className="eyebrow">Sprint 1</span>
+          <span className="eyebrow">Sprint 2</span>
           <strong>Hotel Maximos</strong>
-          <p>Usuarios, acesso e sessao alinhados ao backend.</p>
+          <p>Acesso, usuarios e hospedes consumindo os contratos reais do backend.</p>
         </div>
 
         <nav className="app-nav">
@@ -47,9 +47,15 @@ export function AppShell({ title, description, children }: AppShellProps) {
               to="/usuarios"
               label="Usuarios"
               icon={<UserCog size={18} />}
-              active={location.pathname === '/usuarios'}
+              active={location.pathname.startsWith('/usuarios')}
             />
           ) : null}
+          <NavItem
+            to="/hospedes"
+            label="Hospedes"
+            icon={<BedDouble size={18} />}
+            active={location.pathname.startsWith('/hospedes')}
+          />
         </nav>
 
         <button className="ghost-button sidebar-logout" onClick={handleLogout} type="button">
@@ -81,7 +87,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
 }
 
 type NavItemProps = {
-  to: '/dashboard' | '/perfil' | '/usuarios'
+  to: '/dashboard' | '/perfil' | '/usuarios' | '/hospedes'
   label: string
   icon: ReactNode
   active: boolean

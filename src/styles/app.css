@@ -215,6 +215,10 @@ p {
   gap: 1rem;
 }
 
+.form-grid-two-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .form-error,
 .form-success {
   padding: 0.85rem 1rem;
@@ -531,7 +535,7 @@ p {
 }
 
 .drawer-card {
-  width: min(560px, 100%);
+  width: min(720px, 100%);
   height: calc(100vh - 2rem);
   overflow: auto;
   padding: 1.5rem;
@@ -554,6 +558,80 @@ p {
   margin-bottom: 0.3rem;
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+.detail-stack {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.detail-chip {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  background: rgba(15, 108, 131, 0.06);
+}
+
+.detail-chip small {
+  color: var(--text-muted);
+}
+
+.form-section {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: 24px;
+  background: rgba(15, 108, 131, 0.04);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.muted-copy {
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.acompanhantes-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.acompanhante-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.field-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.field-checkbox input {
+  width: 18px;
+  height: 18px;
+}
+
+.field-checkbox span {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .auth-loading-card {
@@ -592,7 +670,8 @@ p {
 
   .page-header,
   .table-footer,
-  .page-toolbar {
+  .page-toolbar,
+  .section-heading {
     flex-direction: column;
     align-items: stretch;
   }
@@ -604,6 +683,10 @@ p {
 
   .inline-field {
     min-width: 100%;
+  }
+
+  .form-grid-two-columns {
+    grid-template-columns: 1fr;
   }
 
   .app-sidebar {

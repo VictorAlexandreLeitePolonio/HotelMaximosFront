@@ -3,8 +3,13 @@ import { rawApiFetch } from '@/lib/api-core'
 import { useAuthStore } from '@/stores/auth-store'
 import type {
   AuthResponse,
+  CreateHospedeInput,
   CreateUserInput,
+  HospedeListItem,
+  HospedeResponsavel,
+  HospedesQuery,
   PaginatedResponse,
+  UpdateHospedeInput,
   UpdateUserInput,
   UserListItem,
   UsersQuery,
@@ -139,6 +144,62 @@ export function resetUserPassword(id: number) {
     `/api/users/${id}/reset-password`,
     {
       method: 'POST',
+    },
+  )
+}
+
+export function listHospedes(query: HospedesQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    sortField: query.sortField || 'criadoEm',
+    sortOrder: query.sortOrder || 'desc',
+  })
+
+  if (query.search) {
+    params.set('search', query.search)
+  }
+
+  if (query.cpf) {
+    params.set('cpf', query.cpf)
+  }
+
+  if (query.ativo !== undefined) {
+    params.set('ativo', String(query.ativo))
+  }
+
+  return apiRequest<PaginatedResponse<HospedeListItem>>(`/api/hospedes?${params.toString()}`)
+}
+
+export function getHospede(id: number) {
+  return apiRequest<HospedeResponsavel>(`/api/hospedes/${id}`)
+}
+
+export function createHospede(input: CreateHospedeInput) {
+  return apiRequest<HospedeResponsavel>(
+    '/api/hospedes',
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function updateHospede(id: number, input: UpdateHospedeInput) {
+  return apiRequest<HospedeResponsavel>(
+    `/api/hospedes/${id}`,
+    {
+      method: 'PUT',
+      json: input,
+    },
+  )
+}
+
+export function deleteHospede(id: number) {
+  return apiRequest<null>(
+    `/api/hospedes/${id}`,
+    {
+      method: 'DELETE',
     },
   )
 }
