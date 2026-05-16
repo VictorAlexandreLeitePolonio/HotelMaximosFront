@@ -16,6 +16,8 @@ import { Route as authenticatedAuthenticatedPerfilRouteImport } from './routes/(
 import { Route as authenticatedAuthenticatedDashboardRouteImport } from './routes/(authenticated)/_authenticated/dashboard'
 import { Route as authenticatedAuthenticatedUsuariosIndexRouteImport } from './routes/(authenticated)/_authenticated/usuarios/index'
 import { Route as authenticatedAuthenticatedHospedesIndexRouteImport } from './routes/(authenticated)/_authenticated/hospedes/index'
+import { Route as authenticatedAuthenticatedFlatsIndexRouteImport } from './routes/(authenticated)/_authenticated/flats/index'
+import { Route as authenticatedAuthenticatedCategoriasIndexRouteImport } from './routes/(authenticated)/_authenticated/categorias/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -56,12 +58,26 @@ const authenticatedAuthenticatedHospedesIndexRoute =
     path: '/hospedes/',
     getParentRoute: () => authenticatedAuthenticatedRoute,
   } as any)
+const authenticatedAuthenticatedFlatsIndexRoute =
+  authenticatedAuthenticatedFlatsIndexRouteImport.update({
+    id: '/flats/',
+    path: '/flats/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
+const authenticatedAuthenticatedCategoriasIndexRoute =
+  authenticatedAuthenticatedCategoriasIndexRouteImport.update({
+    id: '/categorias/',
+    path: '/categorias/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof publicLoginRoute
   '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/categorias/': typeof authenticatedAuthenticatedCategoriasIndexRoute
+  '/flats/': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
@@ -70,6 +86,8 @@ export interface FileRoutesByTo {
   '/login': typeof publicLoginRoute
   '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/categorias': typeof authenticatedAuthenticatedCategoriasIndexRoute
+  '/flats': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/hospedes': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/usuarios': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
@@ -80,6 +98,8 @@ export interface FileRoutesById {
   '/(public)/login': typeof publicLoginRoute
   '/(authenticated)/_authenticated/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/(authenticated)/_authenticated/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/(authenticated)/_authenticated/categorias/': typeof authenticatedAuthenticatedCategoriasIndexRoute
+  '/(authenticated)/_authenticated/flats/': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/(authenticated)/_authenticated/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/(authenticated)/_authenticated/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
@@ -90,10 +110,20 @@ export interface FileRouteTypes {
     | '/login'
     | '/dashboard'
     | '/perfil'
+    | '/categorias/'
+    | '/flats/'
     | '/hospedes/'
     | '/usuarios/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/dashboard' | '/perfil' | '/hospedes' | '/usuarios'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/perfil'
+    | '/categorias'
+    | '/flats'
+    | '/hospedes'
+    | '/usuarios'
   id:
     | '__root__'
     | '/'
@@ -101,6 +131,8 @@ export interface FileRouteTypes {
     | '/(public)/login'
     | '/(authenticated)/_authenticated/dashboard'
     | '/(authenticated)/_authenticated/perfil'
+    | '/(authenticated)/_authenticated/categorias/'
+    | '/(authenticated)/_authenticated/flats/'
     | '/(authenticated)/_authenticated/hospedes/'
     | '/(authenticated)/_authenticated/usuarios/'
   fileRoutesById: FileRoutesById
@@ -162,12 +194,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAuthenticatedHospedesIndexRouteImport
       parentRoute: typeof authenticatedAuthenticatedRoute
     }
+    '/(authenticated)/_authenticated/flats/': {
+      id: '/(authenticated)/_authenticated/flats/'
+      path: '/flats'
+      fullPath: '/flats/'
+      preLoaderRoute: typeof authenticatedAuthenticatedFlatsIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
+    '/(authenticated)/_authenticated/categorias/': {
+      id: '/(authenticated)/_authenticated/categorias/'
+      path: '/categorias'
+      fullPath: '/categorias/'
+      preLoaderRoute: typeof authenticatedAuthenticatedCategoriasIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
   }
 }
 
 interface authenticatedAuthenticatedRouteChildren {
   authenticatedAuthenticatedDashboardRoute: typeof authenticatedAuthenticatedDashboardRoute
   authenticatedAuthenticatedPerfilRoute: typeof authenticatedAuthenticatedPerfilRoute
+  authenticatedAuthenticatedCategoriasIndexRoute: typeof authenticatedAuthenticatedCategoriasIndexRoute
+  authenticatedAuthenticatedFlatsIndexRoute: typeof authenticatedAuthenticatedFlatsIndexRoute
   authenticatedAuthenticatedHospedesIndexRoute: typeof authenticatedAuthenticatedHospedesIndexRoute
   authenticatedAuthenticatedUsuariosIndexRoute: typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
@@ -178,6 +226,10 @@ const authenticatedAuthenticatedRouteChildren: authenticatedAuthenticatedRouteCh
       authenticatedAuthenticatedDashboardRoute,
     authenticatedAuthenticatedPerfilRoute:
       authenticatedAuthenticatedPerfilRoute,
+    authenticatedAuthenticatedCategoriasIndexRoute:
+      authenticatedAuthenticatedCategoriasIndexRoute,
+    authenticatedAuthenticatedFlatsIndexRoute:
+      authenticatedAuthenticatedFlatsIndexRoute,
     authenticatedAuthenticatedHospedesIndexRoute:
       authenticatedAuthenticatedHospedesIndexRoute,
     authenticatedAuthenticatedUsuariosIndexRoute:

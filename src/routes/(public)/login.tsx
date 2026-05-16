@@ -35,7 +35,16 @@ function LoginPage() {
       return '/perfil' as const
     }
 
-    return (search.redirect as '/dashboard' | '/perfil' | '/usuarios' | undefined) || '/dashboard'
+    return (
+      search.redirect as
+        | '/dashboard'
+        | '/perfil'
+        | '/usuarios'
+        | '/hospedes'
+        | '/categorias'
+        | '/flats'
+        | undefined
+    ) || '/dashboard'
   }, [search.redirect, user?.deveAlterarSenha])
 
   useEffect(() => {

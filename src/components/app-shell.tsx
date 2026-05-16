@@ -1,6 +1,14 @@
 import type { ReactNode } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
-import { BedDouble, LogOut, Shield, UserCog, UserRound } from 'lucide-react'
+import {
+  BedDouble,
+  Building2,
+  LogOut,
+  Shapes,
+  Shield,
+  UserCog,
+  UserRound,
+} from 'lucide-react'
 import { logoutSession } from '@/lib/auth-session'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -24,9 +32,9 @@ export function AppShell({ title, description, children }: AppShellProps) {
     <main className="app-shell">
       <aside className="app-sidebar">
         <div className="brand-block">
-          <span className="eyebrow">Sprint 2</span>
+          <span className="eyebrow">Sprint 3</span>
           <strong>Hotel Maximos</strong>
-          <p>Acesso, usuarios e hospedes consumindo os contratos reais do backend.</p>
+          <p>Cadastros operacionais de hospedes, categorias, subcategorias e flats.</p>
         </div>
 
         <nav className="app-nav">
@@ -48,6 +56,22 @@ export function AppShell({ title, description, children }: AppShellProps) {
               label="Usuarios"
               icon={<UserCog size={18} />}
               active={location.pathname.startsWith('/usuarios')}
+            />
+          ) : null}
+          {user?.perfil === 'Admin' ? (
+            <NavItem
+              to="/categorias"
+              label="Categorias"
+              icon={<Shapes size={18} />}
+              active={location.pathname.startsWith('/categorias')}
+            />
+          ) : null}
+          {user?.perfil === 'Admin' ? (
+            <NavItem
+              to="/flats"
+              label="Flats"
+              icon={<Building2 size={18} />}
+              active={location.pathname.startsWith('/flats')}
             />
           ) : null}
           <NavItem
@@ -87,7 +111,7 @@ export function AppShell({ title, description, children }: AppShellProps) {
 }
 
 type NavItemProps = {
-  to: '/dashboard' | '/perfil' | '/usuarios' | '/hospedes'
+  to: '/dashboard' | '/perfil' | '/usuarios' | '/categorias' | '/flats' | '/hospedes'
   label: string
   icon: ReactNode
   active: boolean

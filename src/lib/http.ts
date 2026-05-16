@@ -3,13 +3,28 @@ import { rawApiFetch } from '@/lib/api-core'
 import { useAuthStore } from '@/stores/auth-store'
 import type {
   AuthResponse,
+  CategoriaDetail,
+  CategoriaListItem,
+  CategoriaQuery,
+  CreateCategoriaInput,
   CreateHospedeInput,
+  CreateFlatInput,
+  CreateSubcategoriaInput,
   CreateUserInput,
+  Flat,
+  FlatListItem,
+  FlatsQuery,
   HospedeListItem,
   HospedeResponsavel,
   HospedesQuery,
   PaginatedResponse,
+  Subcategoria,
+  SubcategoriaListItem,
+  SubcategoriasQuery,
+  UpdateCategoriaInput,
+  UpdateFlatInput,
   UpdateHospedeInput,
+  UpdateSubcategoriaInput,
   UpdateUserInput,
   UserListItem,
   UsersQuery,
@@ -198,6 +213,178 @@ export function updateHospede(id: number, input: UpdateHospedeInput) {
 export function deleteHospede(id: number) {
   return apiRequest<null>(
     `/api/hospedes/${id}`,
+    {
+      method: 'DELETE',
+    },
+  )
+}
+
+export function listCategorias(query: CategoriaQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    sortField: query.sortField || 'criadoEm',
+    sortOrder: query.sortOrder || 'desc',
+  })
+
+  if (query.search) {
+    params.set('search', query.search)
+  }
+
+  if (query.ativo !== undefined) {
+    params.set('ativo', String(query.ativo))
+  }
+
+  return apiRequest<PaginatedResponse<CategoriaListItem>>(`/api/categorias?${params.toString()}`)
+}
+
+export function getCategoria(id: number) {
+  return apiRequest<CategoriaDetail>(`/api/categorias/${id}`)
+}
+
+export function createCategoria(input: CreateCategoriaInput) {
+  return apiRequest<CategoriaDetail>(
+    '/api/categorias',
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function updateCategoria(id: number, input: UpdateCategoriaInput) {
+  return apiRequest<CategoriaDetail>(
+    `/api/categorias/${id}`,
+    {
+      method: 'PUT',
+      json: input,
+    },
+  )
+}
+
+export function deleteCategoria(id: number) {
+  return apiRequest<null>(
+    `/api/categorias/${id}`,
+    {
+      method: 'DELETE',
+    },
+  )
+}
+
+export function listSubcategorias(query: SubcategoriasQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    sortField: query.sortField || 'criadoEm',
+    sortOrder: query.sortOrder || 'desc',
+  })
+
+  if (query.categoriaId) {
+    params.set('categoriaId', String(query.categoriaId))
+  }
+
+  if (query.search) {
+    params.set('search', query.search)
+  }
+
+  if (query.ativo !== undefined) {
+    params.set('ativo', String(query.ativo))
+  }
+
+  return apiRequest<PaginatedResponse<SubcategoriaListItem>>(`/api/subcategorias?${params.toString()}`)
+}
+
+export function getSubcategoria(id: number) {
+  return apiRequest<Subcategoria>(`/api/subcategorias/${id}`)
+}
+
+export function createSubcategoria(input: CreateSubcategoriaInput) {
+  return apiRequest<Subcategoria>(
+    '/api/subcategorias',
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function updateSubcategoria(id: number, input: UpdateSubcategoriaInput) {
+  return apiRequest<Subcategoria>(
+    `/api/subcategorias/${id}`,
+    {
+      method: 'PUT',
+      json: input,
+    },
+  )
+}
+
+export function deleteSubcategoria(id: number) {
+  return apiRequest<null>(
+    `/api/subcategorias/${id}`,
+    {
+      method: 'DELETE',
+    },
+  )
+}
+
+export function listFlats(query: FlatsQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    sortField: query.sortField || 'criadoEm',
+    sortOrder: query.sortOrder || 'desc',
+  })
+
+  if (query.search) {
+    params.set('search', query.search)
+  }
+
+  if (query.categoriaId) {
+    params.set('categoriaId', String(query.categoriaId))
+  }
+
+  if (query.subcategoriaId) {
+    params.set('subcategoriaId', String(query.subcategoriaId))
+  }
+
+  if (query.statusOperacional) {
+    params.set('statusOperacional', query.statusOperacional)
+  }
+
+  if (query.ativo !== undefined) {
+    params.set('ativo', String(query.ativo))
+  }
+
+  return apiRequest<PaginatedResponse<FlatListItem>>(`/api/flats?${params.toString()}`)
+}
+
+export function getFlat(id: number) {
+  return apiRequest<Flat>(`/api/flats/${id}`)
+}
+
+export function createFlat(input: CreateFlatInput) {
+  return apiRequest<Flat>(
+    '/api/flats',
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function updateFlat(id: number, input: UpdateFlatInput) {
+  return apiRequest<Flat>(
+    `/api/flats/${id}`,
+    {
+      method: 'PUT',
+      json: input,
+    },
+  )
+}
+
+export function deleteFlat(id: number) {
+  return apiRequest<null>(
+    `/api/flats/${id}`,
     {
       method: 'DELETE',
     },
