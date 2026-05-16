@@ -10,33 +10,88 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as publicLoginRouteImport } from './routes/(public)/login'
+import { Route as authenticatedAuthenticatedRouteImport } from './routes/(authenticated)/_authenticated'
+import { Route as authenticatedAuthenticatedPerfilRouteImport } from './routes/(authenticated)/_authenticated/perfil'
+import { Route as authenticatedAuthenticatedDashboardRouteImport } from './routes/(authenticated)/_authenticated/dashboard'
+import { Route as authenticatedAuthenticatedUsuariosIndexRouteImport } from './routes/(authenticated)/_authenticated/usuarios/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const publicLoginRoute = publicLoginRouteImport.update({
+  id: '/(public)/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authenticatedAuthenticatedRoute =
+  authenticatedAuthenticatedRouteImport.update({
+    id: '/(authenticated)/_authenticated',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const authenticatedAuthenticatedPerfilRoute =
+  authenticatedAuthenticatedPerfilRouteImport.update({
+    id: '/perfil',
+    path: '/perfil',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
+const authenticatedAuthenticatedDashboardRoute =
+  authenticatedAuthenticatedDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
+const authenticatedAuthenticatedUsuariosIndexRoute =
+  authenticatedAuthenticatedUsuariosIndexRouteImport.update({
+    id: '/usuarios/',
+    path: '/usuarios/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof publicLoginRoute
+  '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
+  '/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof publicLoginRoute
+  '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
+  '/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/usuarios': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(authenticated)/_authenticated': typeof authenticatedAuthenticatedRouteWithChildren
+  '/(public)/login': typeof publicLoginRoute
+  '/(authenticated)/_authenticated/dashboard': typeof authenticatedAuthenticatedDashboardRoute
+  '/(authenticated)/_authenticated/perfil': typeof authenticatedAuthenticatedPerfilRoute
+  '/(authenticated)/_authenticated/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/login' | '/dashboard' | '/perfil' | '/usuarios/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/login' | '/dashboard' | '/perfil' | '/usuarios'
+  id:
+    | '__root__'
+    | '/'
+    | '/(authenticated)/_authenticated'
+    | '/(public)/login'
+    | '/(authenticated)/_authenticated/dashboard'
+    | '/(authenticated)/_authenticated/perfil'
+    | '/(authenticated)/_authenticated/usuarios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  authenticatedAuthenticatedRoute: typeof authenticatedAuthenticatedRouteWithChildren
+  publicLoginRoute: typeof publicLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +103,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(public)/login': {
+      id: '/(public)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof publicLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(authenticated)/_authenticated': {
+      id: '/(authenticated)/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authenticatedAuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(authenticated)/_authenticated/perfil': {
+      id: '/(authenticated)/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof authenticatedAuthenticatedPerfilRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
+    '/(authenticated)/_authenticated/dashboard': {
+      id: '/(authenticated)/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof authenticatedAuthenticatedDashboardRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
+    '/(authenticated)/_authenticated/usuarios/': {
+      id: '/(authenticated)/_authenticated/usuarios/'
+      path: '/usuarios'
+      fullPath: '/usuarios/'
+      preLoaderRoute: typeof authenticatedAuthenticatedUsuariosIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
   }
 }
 
+interface authenticatedAuthenticatedRouteChildren {
+  authenticatedAuthenticatedDashboardRoute: typeof authenticatedAuthenticatedDashboardRoute
+  authenticatedAuthenticatedPerfilRoute: typeof authenticatedAuthenticatedPerfilRoute
+  authenticatedAuthenticatedUsuariosIndexRoute: typeof authenticatedAuthenticatedUsuariosIndexRoute
+}
+
+const authenticatedAuthenticatedRouteChildren: authenticatedAuthenticatedRouteChildren =
+  {
+    authenticatedAuthenticatedDashboardRoute:
+      authenticatedAuthenticatedDashboardRoute,
+    authenticatedAuthenticatedPerfilRoute:
+      authenticatedAuthenticatedPerfilRoute,
+    authenticatedAuthenticatedUsuariosIndexRoute:
+      authenticatedAuthenticatedUsuariosIndexRoute,
+  }
+
+const authenticatedAuthenticatedRouteWithChildren =
+  authenticatedAuthenticatedRoute._addFileChildren(
+    authenticatedAuthenticatedRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  authenticatedAuthenticatedRoute: authenticatedAuthenticatedRouteWithChildren,
+  publicLoginRoute: publicLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
