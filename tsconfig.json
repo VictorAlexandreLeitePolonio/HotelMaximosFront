@@ -16,7 +16,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
+    "types": ["vite/client", "cypress"]
   },
   "include": ["src", "vite.config.ts", "cypress/e2e/**/*.ts"]
 }

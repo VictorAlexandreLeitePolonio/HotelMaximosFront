@@ -7,6 +7,9 @@ import {
   Scripts,
   createRootRoute,
 } from '@tanstack/react-router'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { AuthBootstrap } from '@/components/auth-bootstrap'
+import { queryClient } from '@/lib/query-client'
 import appStyles from '../styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -34,7 +37,10 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      <QueryClientProvider client={queryClient}>
+        <AuthBootstrap />
+        <Outlet />
+      </QueryClientProvider>
     </RootDocument>
   )
 }
