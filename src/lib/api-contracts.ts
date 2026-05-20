@@ -241,3 +241,99 @@ export type CreateFlatInput = {
 }
 
 export type UpdateFlatInput = Partial<CreateFlatInput>
+
+export type ReservaStatus = 'Confirmada' | 'Cancelada' | 'NoShow'
+
+export type ReservaSubcategoriaSnapshot = {
+  id: number
+  nome: string
+  precoBase: number
+  capacidadeMaxima: number
+}
+
+export type ReservaFlatSnapshot = {
+  id: number
+  numero: string
+  statusOperacional: FlatOperationalStatus
+}
+
+export type ReservaHospedeResponsavelSnapshot = {
+  id: number
+  nomeCompleto: string
+  cpf: string
+}
+
+export type ReservaAcompanhanteSnapshot = {
+  id: number
+  nomeCompleto: string
+  documento: string | null
+  menorDeIdade: boolean
+}
+
+export type Reserva = {
+  id: number
+  flatId: number
+  flat: ReservaFlatSnapshot
+  subcategoriaId: number
+  subcategoria: ReservaSubcategoriaSnapshot
+  hospedeResponsavelId: number
+  hospedeResponsavel: ReservaHospedeResponsavelSnapshot
+  acompanhantes: ReservaAcompanhanteSnapshot[]
+  dataInicio: string
+  dataFim: string
+  status: ReservaStatus
+  quantidadeHospedes: number
+  cafeContratado: boolean
+  valorBaseContratado: number
+  valorCafePorPessoa: number
+  valorCafeContratado: number
+  valorTotalContratado: number
+  observacoes: string | null
+  criadoEm: string
+  atualizadoEm: string
+}
+
+export type ReservaListItem = Reserva
+
+export type ReservasQuery = {
+  page: number
+  pageSize: number
+  search?: string
+  flatId?: number
+  hospedeResponsavelId?: number
+  status?: ReservaStatus
+  dataInicio?: string
+  dataFim?: string
+  sortField?: 'dataInicio' | 'dataFim' | 'criadoEm' | 'atualizadoEm'
+  sortOrder?: 'asc' | 'desc'
+}
+
+export type CreateReservaInput = {
+  flatId: number
+  hospedeResponsavelId: number
+  acompanhanteIds: number[]
+  dataInicio: string
+  dataFim: string
+  cafeContratado: boolean
+  valorCafePorPessoa: number
+  observacoes?: string
+}
+
+export type DisponibilidadeFlat = {
+  id: number
+  numero: string
+  subcategoriaId: number
+  subcategoria: ReservaSubcategoriaSnapshot
+  statusOperacional: FlatOperationalStatus
+  statusDisponibilidade: FlatOperationalStatus
+  disponivel: boolean
+}
+
+export type DisponibilidadeQuery = {
+  page: number
+  pageSize: number
+  dataInicio: string
+  dataFim: string
+  categoriaId?: number
+  subcategoriaId?: number
+}

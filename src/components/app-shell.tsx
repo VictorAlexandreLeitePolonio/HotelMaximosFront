@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import {
   BedDouble,
   Building2,
+  CalendarDays,
   LogOut,
   Shapes,
   Shield,
@@ -32,9 +33,9 @@ export function AppShell({ title, description, children }: AppShellProps) {
     <main className="app-shell">
       <aside className="app-sidebar">
         <div className="brand-block">
-          <span className="eyebrow">Sprint 3</span>
+          <span className="eyebrow">Sprint 4</span>
           <strong>Hotel Maximos</strong>
-          <p>Cadastros operacionais de hospedes, categorias, subcategorias e flats.</p>
+          <p>Operacao de reservas e disponibilidade sobre a base de hospedes, categorias e flats.</p>
         </div>
 
         <nav className="app-nav">
@@ -80,6 +81,12 @@ export function AppShell({ title, description, children }: AppShellProps) {
             icon={<BedDouble size={18} />}
             active={location.pathname.startsWith('/hospedes')}
           />
+          <NavItem
+            to="/reservas"
+            label="Reservas"
+            icon={<CalendarDays size={18} />}
+            active={location.pathname.startsWith('/reservas')}
+          />
         </nav>
 
         <button className="ghost-button sidebar-logout" onClick={handleLogout} type="button">
@@ -111,7 +118,14 @@ export function AppShell({ title, description, children }: AppShellProps) {
 }
 
 type NavItemProps = {
-  to: '/dashboard' | '/perfil' | '/usuarios' | '/categorias' | '/flats' | '/hospedes'
+  to:
+    | '/dashboard'
+    | '/perfil'
+    | '/usuarios'
+    | '/categorias'
+    | '/flats'
+    | '/hospedes'
+    | '/reservas'
   label: string
   icon: ReactNode
   active: boolean
