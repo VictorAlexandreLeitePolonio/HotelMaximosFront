@@ -15,6 +15,7 @@ import { Route as authenticatedAuthenticatedRouteImport } from './routes/(authen
 import { Route as authenticatedAuthenticatedPerfilRouteImport } from './routes/(authenticated)/_authenticated/perfil'
 import { Route as authenticatedAuthenticatedDashboardRouteImport } from './routes/(authenticated)/_authenticated/dashboard'
 import { Route as authenticatedAuthenticatedUsuariosIndexRouteImport } from './routes/(authenticated)/_authenticated/usuarios/index'
+import { Route as authenticatedAuthenticatedReservasIndexRouteImport } from './routes/(authenticated)/_authenticated/reservas/index'
 import { Route as authenticatedAuthenticatedHospedesIndexRouteImport } from './routes/(authenticated)/_authenticated/hospedes/index'
 import { Route as authenticatedAuthenticatedFlatsIndexRouteImport } from './routes/(authenticated)/_authenticated/flats/index'
 import { Route as authenticatedAuthenticatedCategoriasIndexRouteImport } from './routes/(authenticated)/_authenticated/categorias/index'
@@ -52,6 +53,12 @@ const authenticatedAuthenticatedUsuariosIndexRoute =
     path: '/usuarios/',
     getParentRoute: () => authenticatedAuthenticatedRoute,
   } as any)
+const authenticatedAuthenticatedReservasIndexRoute =
+  authenticatedAuthenticatedReservasIndexRouteImport.update({
+    id: '/reservas/',
+    path: '/reservas/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
 const authenticatedAuthenticatedHospedesIndexRoute =
   authenticatedAuthenticatedHospedesIndexRouteImport.update({
     id: '/hospedes/',
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/categorias/': typeof authenticatedAuthenticatedCategoriasIndexRoute
   '/flats/': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
+  '/reservas/': typeof authenticatedAuthenticatedReservasIndexRoute
   '/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -89,6 +97,7 @@ export interface FileRoutesByTo {
   '/categorias': typeof authenticatedAuthenticatedCategoriasIndexRoute
   '/flats': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/hospedes': typeof authenticatedAuthenticatedHospedesIndexRoute
+  '/reservas': typeof authenticatedAuthenticatedReservasIndexRoute
   '/usuarios': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRoutesById {
@@ -101,6 +110,7 @@ export interface FileRoutesById {
   '/(authenticated)/_authenticated/categorias/': typeof authenticatedAuthenticatedCategoriasIndexRoute
   '/(authenticated)/_authenticated/flats/': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/(authenticated)/_authenticated/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
+  '/(authenticated)/_authenticated/reservas/': typeof authenticatedAuthenticatedReservasIndexRoute
   '/(authenticated)/_authenticated/usuarios/': typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 export interface FileRouteTypes {
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/categorias/'
     | '/flats/'
     | '/hospedes/'
+    | '/reservas/'
     | '/usuarios/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '/categorias'
     | '/flats'
     | '/hospedes'
+    | '/reservas'
     | '/usuarios'
   id:
     | '__root__'
@@ -134,6 +146,7 @@ export interface FileRouteTypes {
     | '/(authenticated)/_authenticated/categorias/'
     | '/(authenticated)/_authenticated/flats/'
     | '/(authenticated)/_authenticated/hospedes/'
+    | '/(authenticated)/_authenticated/reservas/'
     | '/(authenticated)/_authenticated/usuarios/'
   fileRoutesById: FileRoutesById
 }
@@ -187,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAuthenticatedUsuariosIndexRouteImport
       parentRoute: typeof authenticatedAuthenticatedRoute
     }
+    '/(authenticated)/_authenticated/reservas/': {
+      id: '/(authenticated)/_authenticated/reservas/'
+      path: '/reservas'
+      fullPath: '/reservas/'
+      preLoaderRoute: typeof authenticatedAuthenticatedReservasIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
     '/(authenticated)/_authenticated/hospedes/': {
       id: '/(authenticated)/_authenticated/hospedes/'
       path: '/hospedes'
@@ -217,6 +237,7 @@ interface authenticatedAuthenticatedRouteChildren {
   authenticatedAuthenticatedCategoriasIndexRoute: typeof authenticatedAuthenticatedCategoriasIndexRoute
   authenticatedAuthenticatedFlatsIndexRoute: typeof authenticatedAuthenticatedFlatsIndexRoute
   authenticatedAuthenticatedHospedesIndexRoute: typeof authenticatedAuthenticatedHospedesIndexRoute
+  authenticatedAuthenticatedReservasIndexRoute: typeof authenticatedAuthenticatedReservasIndexRoute
   authenticatedAuthenticatedUsuariosIndexRoute: typeof authenticatedAuthenticatedUsuariosIndexRoute
 }
 
@@ -232,6 +253,8 @@ const authenticatedAuthenticatedRouteChildren: authenticatedAuthenticatedRouteCh
       authenticatedAuthenticatedFlatsIndexRoute,
     authenticatedAuthenticatedHospedesIndexRoute:
       authenticatedAuthenticatedHospedesIndexRoute,
+    authenticatedAuthenticatedReservasIndexRoute:
+      authenticatedAuthenticatedReservasIndexRoute,
     authenticatedAuthenticatedUsuariosIndexRoute:
       authenticatedAuthenticatedUsuariosIndexRoute,
   }

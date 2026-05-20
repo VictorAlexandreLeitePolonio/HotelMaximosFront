@@ -6,11 +6,14 @@ import type {
   CategoriaDetail,
   CategoriaListItem,
   CategoriaQuery,
+  CreateReservaInput,
   CreateCategoriaInput,
   CreateHospedeInput,
   CreateFlatInput,
   CreateSubcategoriaInput,
   CreateUserInput,
+  DisponibilidadeFlat,
+  DisponibilidadeQuery,
   Flat,
   FlatListItem,
   FlatsQuery,
@@ -18,6 +21,9 @@ import type {
   HospedeResponsavel,
   HospedesQuery,
   PaginatedResponse,
+  Reserva,
+  ReservaListItem,
+  ReservasQuery,
   Subcategoria,
   SubcategoriaListItem,
   SubcategoriasQuery,
@@ -388,6 +394,76 @@ export function deleteFlat(id: number) {
     {
       method: 'DELETE',
     },
+  )
+}
+
+export function listReservas(query: ReservasQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    sortField: query.sortField || 'dataInicio',
+    sortOrder: query.sortOrder || 'asc',
+  })
+
+  if (query.search) {
+    params.set('search', query.search)
+  }
+
+  if (query.flatId) {
+    params.set('flatId', String(query.flatId))
+  }
+
+  if (query.hospedeResponsavelId) {
+    params.set('hospedeResponsavelId', String(query.hospedeResponsavelId))
+  }
+
+  if (query.status) {
+    params.set('status', query.status)
+  }
+
+  if (query.dataInicio) {
+    params.set('dataInicio', query.dataInicio)
+  }
+
+  if (query.dataFim) {
+    params.set('dataFim', query.dataFim)
+  }
+
+  return apiRequest<PaginatedResponse<ReservaListItem>>(`/api/reservas?${params.toString()}`)
+}
+
+export function getReserva(id: number) {
+  return apiRequest<Reserva>(`/api/reservas/${id}`)
+}
+
+export function createReserva(input: CreateReservaInput) {
+  return apiRequest<Reserva>(
+    '/api/reservas',
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function listDisponibilidade(query: DisponibilidadeQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    dataInicio: query.dataInicio,
+    dataFim: query.dataFim,
+  })
+
+  if (query.categoriaId) {
+    params.set('categoriaId', String(query.categoriaId))
+  }
+
+  if (query.subcategoriaId) {
+    params.set('subcategoriaId', String(query.subcategoriaId))
+  }
+
+  return apiRequest<PaginatedResponse<DisponibilidadeFlat>>(
+    `/api/reservas/disponibilidade?${params.toString()}`,
   )
 }
 

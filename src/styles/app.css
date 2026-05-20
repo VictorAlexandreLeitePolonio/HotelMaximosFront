@@ -735,6 +735,56 @@ p {
   line-height: 1.8;
 }
 
+.availability-grid,
+.summary-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.availability-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 1rem;
+}
+
+.summary-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.availability-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: left;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.82);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.availability-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(15, 108, 131, 0.18);
+  box-shadow: 0 20px 50px rgba(16, 32, 47, 0.08);
+}
+
+.availability-card-header,
+.availability-card-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.availability-card-header strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 1.1rem;
+}
+
+.availability-card-footer {
+  align-items: center;
+}
+
 @media (max-width: 1120px) {
   .app-shell,
   .login-shell {
