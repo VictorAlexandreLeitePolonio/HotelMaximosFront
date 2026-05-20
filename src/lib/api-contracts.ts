@@ -337,3 +337,127 @@ export type DisponibilidadeQuery = {
   categoriaId?: number
   subcategoriaId?: number
 }
+
+export type FormaPagamento =
+  | 'Pix'
+  | 'Dinheiro'
+  | 'CartaoCredito'
+  | 'CartaoDebito'
+  | 'Transferencia'
+
+export type EstadiaStatus = 'Ativa' | 'Encerrada'
+
+export type CobrancaStatus = 'Pendente' | 'Paga' | 'Cancelada'
+
+export type Estadia = {
+  id: number
+  reservaId: number | null
+  flatId: number
+  flat: ReservaFlatSnapshot
+  subcategoriaId: number
+  subcategoria: ReservaSubcategoriaSnapshot
+  hospedeResponsavelId: number
+  hospedeResponsavel: ReservaHospedeResponsavelSnapshot
+  acompanhantes: ReservaAcompanhanteSnapshot[]
+  dataInicio: string
+  dataFimPrevista: string
+  dataFimEfetiva: string | null
+  status: EstadiaStatus
+  quantidadeHospedes: number
+  cafeContratado: boolean
+  valorBaseContratado: number
+  valorCafePorPessoa: number
+  valorCafeContratado: number
+  valorTotalContratado: number
+  observacoes: string | null
+  criadoEm: string
+  atualizadoEm: string
+}
+
+export type Cobranca = {
+  id: number
+  estadiaId: number
+  competenciaInicio: string
+  competenciaFim: string
+  valor: number
+  status: CobrancaStatus
+  geradaEm: string
+  liquidadaEm: string | null
+  criadoEm: string
+  atualizadoEm: string
+}
+
+export type Pagamento = {
+  id: number
+  cobrancaId: number
+  usuarioId: number
+  caixaId: number
+  formaPagamento: FormaPagamento
+  valor: number
+  comprovante: string | null
+  criadoEm: string
+  atualizadoEm: string
+}
+
+export type CheckInResult = {
+  reserva: Reserva
+  estadia: Estadia
+  cobranca: Cobranca
+  pagamento: Pagamento
+}
+
+export type GrupoCheckIn = 'Hoje' | 'Atrasado'
+
+export type CheckInDoDiaItem = Reserva & {
+  grupoCheckIn: GrupoCheckIn
+}
+
+export type CheckInDoDiaQuery = {
+  page: number
+  pageSize: number
+  grupo?: GrupoCheckIn
+  referenceDate?: string
+}
+
+export type EstadiasAtivasQuery = {
+  page: number
+  pageSize: number
+  search?: string
+  flatId?: number
+  hospedeResponsavelId?: number
+  sortField?: 'dataInicio' | 'dataFimPrevista' | 'criadoEm' | 'atualizadoEm'
+  sortOrder?: 'asc' | 'desc'
+}
+
+export type CheckInReservaInput = {
+  dataInicioEfetiva?: string
+  dataFimPrevista?: string
+  formaPagamento: FormaPagamento
+  valorPago: number
+  comprovante?: string
+  observacoes?: string
+}
+
+export type CheckInDiretoInput = {
+  flatId: number
+  hospedeResponsavelId: number
+  acompanhanteIds: number[]
+  dataInicio?: string
+  dataFimPrevista?: string
+  cafeContratado: boolean
+  valorCafePorPessoa: number
+  formaPagamento: FormaPagamento
+  valorPago: number
+  comprovante?: string
+  observacoes?: string
+}
+
+export type TransferirFlatInput = {
+  novoFlatId: number
+  observacoes?: string
+}
+
+export type RenovarEstadiaInput = {
+  dataFimPrevista: string
+  observacoes?: string
+}
