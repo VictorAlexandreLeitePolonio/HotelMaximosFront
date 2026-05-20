@@ -18,6 +18,8 @@ import { Route as authenticatedAuthenticatedUsuariosIndexRouteImport } from './r
 import { Route as authenticatedAuthenticatedReservasIndexRouteImport } from './routes/(authenticated)/_authenticated/reservas/index'
 import { Route as authenticatedAuthenticatedHospedesIndexRouteImport } from './routes/(authenticated)/_authenticated/hospedes/index'
 import { Route as authenticatedAuthenticatedFlatsIndexRouteImport } from './routes/(authenticated)/_authenticated/flats/index'
+import { Route as authenticatedAuthenticatedEstadiasAtivasIndexRouteImport } from './routes/(authenticated)/_authenticated/estadias-ativas/index'
+import { Route as authenticatedAuthenticatedCheckInIndexRouteImport } from './routes/(authenticated)/_authenticated/check-in/index'
 import { Route as authenticatedAuthenticatedCategoriasIndexRouteImport } from './routes/(authenticated)/_authenticated/categorias/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -71,6 +73,18 @@ const authenticatedAuthenticatedFlatsIndexRoute =
     path: '/flats/',
     getParentRoute: () => authenticatedAuthenticatedRoute,
   } as any)
+const authenticatedAuthenticatedEstadiasAtivasIndexRoute =
+  authenticatedAuthenticatedEstadiasAtivasIndexRouteImport.update({
+    id: '/estadias-ativas/',
+    path: '/estadias-ativas/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
+const authenticatedAuthenticatedCheckInIndexRoute =
+  authenticatedAuthenticatedCheckInIndexRouteImport.update({
+    id: '/check-in/',
+    path: '/check-in/',
+    getParentRoute: () => authenticatedAuthenticatedRoute,
+  } as any)
 const authenticatedAuthenticatedCategoriasIndexRoute =
   authenticatedAuthenticatedCategoriasIndexRouteImport.update({
     id: '/categorias/',
@@ -84,6 +98,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/perfil': typeof authenticatedAuthenticatedPerfilRoute
   '/categorias/': typeof authenticatedAuthenticatedCategoriasIndexRoute
+  '/check-in/': typeof authenticatedAuthenticatedCheckInIndexRoute
+  '/estadias-ativas/': typeof authenticatedAuthenticatedEstadiasAtivasIndexRoute
   '/flats/': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/reservas/': typeof authenticatedAuthenticatedReservasIndexRoute
@@ -95,6 +111,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/perfil': typeof authenticatedAuthenticatedPerfilRoute
   '/categorias': typeof authenticatedAuthenticatedCategoriasIndexRoute
+  '/check-in': typeof authenticatedAuthenticatedCheckInIndexRoute
+  '/estadias-ativas': typeof authenticatedAuthenticatedEstadiasAtivasIndexRoute
   '/flats': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/hospedes': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/reservas': typeof authenticatedAuthenticatedReservasIndexRoute
@@ -108,6 +126,8 @@ export interface FileRoutesById {
   '/(authenticated)/_authenticated/dashboard': typeof authenticatedAuthenticatedDashboardRoute
   '/(authenticated)/_authenticated/perfil': typeof authenticatedAuthenticatedPerfilRoute
   '/(authenticated)/_authenticated/categorias/': typeof authenticatedAuthenticatedCategoriasIndexRoute
+  '/(authenticated)/_authenticated/check-in/': typeof authenticatedAuthenticatedCheckInIndexRoute
+  '/(authenticated)/_authenticated/estadias-ativas/': typeof authenticatedAuthenticatedEstadiasAtivasIndexRoute
   '/(authenticated)/_authenticated/flats/': typeof authenticatedAuthenticatedFlatsIndexRoute
   '/(authenticated)/_authenticated/hospedes/': typeof authenticatedAuthenticatedHospedesIndexRoute
   '/(authenticated)/_authenticated/reservas/': typeof authenticatedAuthenticatedReservasIndexRoute
@@ -121,6 +141,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/perfil'
     | '/categorias/'
+    | '/check-in/'
+    | '/estadias-ativas/'
     | '/flats/'
     | '/hospedes/'
     | '/reservas/'
@@ -132,6 +154,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/perfil'
     | '/categorias'
+    | '/check-in'
+    | '/estadias-ativas'
     | '/flats'
     | '/hospedes'
     | '/reservas'
@@ -144,6 +168,8 @@ export interface FileRouteTypes {
     | '/(authenticated)/_authenticated/dashboard'
     | '/(authenticated)/_authenticated/perfil'
     | '/(authenticated)/_authenticated/categorias/'
+    | '/(authenticated)/_authenticated/check-in/'
+    | '/(authenticated)/_authenticated/estadias-ativas/'
     | '/(authenticated)/_authenticated/flats/'
     | '/(authenticated)/_authenticated/hospedes/'
     | '/(authenticated)/_authenticated/reservas/'
@@ -221,6 +247,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAuthenticatedFlatsIndexRouteImport
       parentRoute: typeof authenticatedAuthenticatedRoute
     }
+    '/(authenticated)/_authenticated/estadias-ativas/': {
+      id: '/(authenticated)/_authenticated/estadias-ativas/'
+      path: '/estadias-ativas'
+      fullPath: '/estadias-ativas/'
+      preLoaderRoute: typeof authenticatedAuthenticatedEstadiasAtivasIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
+    '/(authenticated)/_authenticated/check-in/': {
+      id: '/(authenticated)/_authenticated/check-in/'
+      path: '/check-in'
+      fullPath: '/check-in/'
+      preLoaderRoute: typeof authenticatedAuthenticatedCheckInIndexRouteImport
+      parentRoute: typeof authenticatedAuthenticatedRoute
+    }
     '/(authenticated)/_authenticated/categorias/': {
       id: '/(authenticated)/_authenticated/categorias/'
       path: '/categorias'
@@ -235,6 +275,8 @@ interface authenticatedAuthenticatedRouteChildren {
   authenticatedAuthenticatedDashboardRoute: typeof authenticatedAuthenticatedDashboardRoute
   authenticatedAuthenticatedPerfilRoute: typeof authenticatedAuthenticatedPerfilRoute
   authenticatedAuthenticatedCategoriasIndexRoute: typeof authenticatedAuthenticatedCategoriasIndexRoute
+  authenticatedAuthenticatedCheckInIndexRoute: typeof authenticatedAuthenticatedCheckInIndexRoute
+  authenticatedAuthenticatedEstadiasAtivasIndexRoute: typeof authenticatedAuthenticatedEstadiasAtivasIndexRoute
   authenticatedAuthenticatedFlatsIndexRoute: typeof authenticatedAuthenticatedFlatsIndexRoute
   authenticatedAuthenticatedHospedesIndexRoute: typeof authenticatedAuthenticatedHospedesIndexRoute
   authenticatedAuthenticatedReservasIndexRoute: typeof authenticatedAuthenticatedReservasIndexRoute
@@ -249,6 +291,10 @@ const authenticatedAuthenticatedRouteChildren: authenticatedAuthenticatedRouteCh
       authenticatedAuthenticatedPerfilRoute,
     authenticatedAuthenticatedCategoriasIndexRoute:
       authenticatedAuthenticatedCategoriasIndexRoute,
+    authenticatedAuthenticatedCheckInIndexRoute:
+      authenticatedAuthenticatedCheckInIndexRoute,
+    authenticatedAuthenticatedEstadiasAtivasIndexRoute:
+      authenticatedAuthenticatedEstadiasAtivasIndexRoute,
     authenticatedAuthenticatedFlatsIndexRoute:
       authenticatedAuthenticatedFlatsIndexRoute,
     authenticatedAuthenticatedHospedesIndexRoute:

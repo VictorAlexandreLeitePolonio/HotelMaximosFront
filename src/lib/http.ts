@@ -6,6 +6,11 @@ import type {
   CategoriaDetail,
   CategoriaListItem,
   CategoriaQuery,
+  CheckInDiretoInput,
+  CheckInDoDiaItem,
+  CheckInDoDiaQuery,
+  CheckInReservaInput,
+  CheckInResult,
   CreateReservaInput,
   CreateCategoriaInput,
   CreateHospedeInput,
@@ -14,6 +19,8 @@ import type {
   CreateUserInput,
   DisponibilidadeFlat,
   DisponibilidadeQuery,
+  Estadia,
+  EstadiasAtivasQuery,
   Flat,
   FlatListItem,
   FlatsQuery,
@@ -23,10 +30,12 @@ import type {
   PaginatedResponse,
   Reserva,
   ReservaListItem,
+  RenovarEstadiaInput,
   ReservasQuery,
   Subcategoria,
   SubcategoriaListItem,
   SubcategoriasQuery,
+  TransferirFlatInput,
   UpdateCategoriaInput,
   UpdateFlatInput,
   UpdateHospedeInput,
@@ -464,6 +473,88 @@ export function listDisponibilidade(query: DisponibilidadeQuery) {
 
   return apiRequest<PaginatedResponse<DisponibilidadeFlat>>(
     `/api/reservas/disponibilidade?${params.toString()}`,
+  )
+}
+
+export function checkInReserva(id: number, input: CheckInReservaInput) {
+  return apiRequest<CheckInResult>(
+    `/api/reservas/${id}/check-in`,
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function checkInDireto(input: CheckInDiretoInput) {
+  return apiRequest<CheckInResult>(
+    '/api/estadias/check-in-direto',
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function listCheckInDoDia(query: CheckInDoDiaQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+  })
+
+  if (query.grupo) {
+    params.set('grupo', query.grupo)
+  }
+
+  if (query.referenceDate) {
+    params.set('referenceDate', query.referenceDate)
+  }
+
+  return apiRequest<PaginatedResponse<CheckInDoDiaItem>>(
+    `/api/estadias/check-in-do-dia?${params.toString()}`,
+  )
+}
+
+export function listEstadiasAtivas(query: EstadiasAtivasQuery) {
+  const params = new URLSearchParams({
+    page: String(query.page),
+    pageSize: String(query.pageSize),
+    sortField: query.sortField || 'dataInicio',
+    sortOrder: query.sortOrder || 'asc',
+  })
+
+  if (query.search) {
+    params.set('search', query.search)
+  }
+
+  if (query.flatId) {
+    params.set('flatId', String(query.flatId))
+  }
+
+  if (query.hospedeResponsavelId) {
+    params.set('hospedeResponsavelId', String(query.hospedeResponsavelId))
+  }
+
+  return apiRequest<PaginatedResponse<Estadia>>(`/api/estadias/ativas?${params.toString()}`)
+}
+
+export function transferirFlatEstadia(id: number, input: TransferirFlatInput) {
+  return apiRequest<Estadia>(
+    `/api/estadias/${id}/trocar-flat`,
+    {
+      method: 'POST',
+      json: input,
+    },
+  )
+}
+
+export function renovarEstadia(id: number, input: RenovarEstadiaInput) {
+  return apiRequest<Estadia>(
+    `/api/estadias/${id}/renovar`,
+    {
+      method: 'POST',
+      json: input,
+    },
   )
 }
 

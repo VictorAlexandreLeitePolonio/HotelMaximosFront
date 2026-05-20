@@ -4,6 +4,8 @@ import {
   BedDouble,
   Building2,
   CalendarDays,
+  KeyRound,
+  LogIn,
   LogOut,
   Shapes,
   Shield,
@@ -33,9 +35,9 @@ export function AppShell({ title, description, children }: AppShellProps) {
     <main className="app-shell">
       <aside className="app-sidebar">
         <div className="brand-block">
-          <span className="eyebrow">Sprint 4</span>
+          <span className="eyebrow">Sprint 5</span>
           <strong>Hotel Maximos</strong>
-          <p>Operacao de reservas e disponibilidade sobre a base de hospedes, categorias e flats.</p>
+          <p>Operacao de reservas, check-in e estadias ativas sobre a base de hospedes e flats.</p>
         </div>
 
         <nav className="app-nav">
@@ -87,6 +89,18 @@ export function AppShell({ title, description, children }: AppShellProps) {
             icon={<CalendarDays size={18} />}
             active={location.pathname.startsWith('/reservas')}
           />
+          <NavItem
+            to="/check-in"
+            label="Check-in do dia"
+            icon={<LogIn size={18} />}
+            active={location.pathname.startsWith('/check-in')}
+          />
+          <NavItem
+            to="/estadias-ativas"
+            label="Estadias ativas"
+            icon={<KeyRound size={18} />}
+            active={location.pathname.startsWith('/estadias-ativas')}
+          />
         </nav>
 
         <button className="ghost-button sidebar-logout" onClick={handleLogout} type="button">
@@ -126,6 +140,8 @@ type NavItemProps = {
     | '/flats'
     | '/hospedes'
     | '/reservas'
+    | '/check-in'
+    | '/estadias-ativas'
   label: string
   icon: ReactNode
   active: boolean
